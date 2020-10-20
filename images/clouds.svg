@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1070.003" height="1029" viewBox="0 0 1070.003 1029">
+  <defs>
+    <rect id="rect-2" width="512" height="512" x="0" y="517"/>
+    <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+      <rect width="1070.003" height="1029" x="0" y="0" fill="black"/>
+      <use fill="white" xlink:href="#rect-2"/>
+    </mask>
+    <rect id="rect-5" width="400" height="400" x="636" y="0"/>
+    <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="userSpaceOnUse">
+      <rect width="1070.003" height="1029" x="0" y="0" fill="black"/>
+      <use fill="white" xlink:href="#rect-5"/>
+    </mask>
+  </defs>
+  <g>
+    <rect width="1010" height="826" x="60.003" y="141" fill="none"/>
+    <g>
+      <use fill="none" xlink:href="#rect-2"/>
+      <g mask="url(#mask-3)">
+        <path fill="rgb(189,189,189)" fill-rule="evenodd" d="M434.931 744.069C428.207 701.032 390.897 668 346 668c-16.89 0-33.12 4.673-47.197 13.389C277.387 645.397 238.832 623 196 623c-66.167 0-120 53.833-120 120 0 .41 0 .835.015 1.245C33.49 751.408 0 788.483 0 833c0 49.629 41.371 90 91 90h330c49.629 0 91-40.371 91-90 0-44.897-34.032-82.207-77.069-88.931z"/>
+      </g>
+    </g>
+    <g>
+      <use fill="none" xlink:href="#rect-5"/>
+      <g mask="url(#mask-6)">
+        <path fill="rgb(224,224,224)" fill-rule="evenodd" d="M975.78984375 177.39765625C970.53671875 143.775 941.38828125 117.96875 906.3125 117.96875c-13.1953125 0-25.875 3.65078125-36.87265625 10.46015625C852.70859375 100.31015625 822.5875 82.8125 789.125 82.8125c-51.69296875 0-93.75 42.05703125-93.75 93.75 0 .3203125 0 .65234375.01171875.97265625C662.1640625 183.13125 636 212.09609375 636 246.875c0 38.77265625 32.32109375 70.3125 71.09375 70.3125h257.8125c38.77265625 0 71.09375-31.53984375 71.09375-70.3125 0-35.07578125-26.5875-64.22421875-60.21015625-69.47734375z"/>
+      </g>
+    </g>
+  </g>
+</svg>

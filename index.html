@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title> Weathy </title>
+        <meta name="description" content="Weather app">
+        <meta name="Keywords" content="weather, app, temperature, city">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./css/main.css">
+        <link rel="icon" href="images/assets/fav-icon.svg" type="image/svg" sizes="16x16">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.10/tailwind.min.css" rel="stylesheet">
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:title" content="Weathy">
+        <meta name="twitter:description" content="">
+        
+        <!-- Open Graph data -->
+        <meta property="og:title" content="Weathy" />
+        <meta property="og:type" content="music" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:tag" content="" />
+        <meta property="og:description" content="Weather app" />
+        <meta property="og:site_name" content="weathy" />
+    </head>
+    <body>
+        <div id="weather-content" class="wrapper flex flex-col lg:flex-row">
+            <header>
+                <div class="topnav flex justify-between items-center bg-white">
+                    <div class="logo-col w-32">
+                        <img class="logo " src="images/assets/logo.svg">
+                    </div>
+                    <div class="search-container">
+                        <div class="flex searchBox">
+                            <input v-model="location" class="searchInput" type="text" placeholder="Enter Zip Code or City..." name="search">
+                            <button v-on:click="getWeather()" type="submit">
+                                <img class="h-6"src="images/assets/search.svg">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <section v-if="!displayWeather" id="search-section" class="flex-auto w-screen h-screen lg:w-9/12 flex justify-center items-center">
+                <div class="mx-auto">
+                    <h1 class="font-black text-center"> Search for Weather</h1>
+                    <div class="flex justify-center">
+                        <input v-model="location" type="text" placeholder="Enter City or Zip Code for Weather..." name="search">
+                        <button v-on:click="getWeather()" type="submit" class="font-bold">Submit</button>
+                    </div>
+                </div>
+            </section>
+            <section v-if="displayWeather" id="current-section" class="flex-auto w-screen h-screen lg:w-9/12">
+                <div class="current-weather flex-1 p-6">
+                    <div class="location">
+                        <p class="day font-black"> {{date[0]}} </p>
+                        <h1 class="city font-black"> {{current.name.toUpperCase()}}</h1>
+                        <h2 class="date font-black"> {{ date[1].toUpperCase()}} {{date[2]}} </h2>
+                    </div>
+                    <div class="degrees font-black">
+                        <p> {{Math.floor(current.temp)}}<span>°F</span></p>
+                    </div>
+                    <div class="icons">
+                        <div v-show="active" v-on:click="addCity(current.name,current.lon,current.lat)" class="plus">
+                            <img class="" src="images/assets/plus.svg">
+                        </div>
+                        <div v-show="!active" v-on:click="removeCity(index)" class="minus">
+                            <img class="" src="images/assets/minus.svg">
+                        </div>
+                    </div>
+                </div>
+                <div class="forecast-container">
+                    <ul class="forecast flex mx-auto ">
+                        <li v-for="day in forecast.slice(1,7)" class="forecast-item text-center flex-1">
+                            <h3 class="date font-black mb-4"> {{getDate(day.dt)}} </h3>
+                            <p class="hi font-bold">H: {{Math.floor(day.temp.max)}}<span>°F</span></p>
+                            <p class="low font-bold">L: {{Math.floor(day.temp.min)}}<span>°F</span></p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section v-bind:class="[{show: !displayWeather}]" id="info-section" class="flex-auto w-screen lg:w-3/12 lg:h-screen">
+                <div v-show="Object.keys(current).length > 0" class="details">
+                    <h3 class="lg:mt-32"> Weather Details:</h3>
+                    <div v-show="current.feelsLike" class="flex justify-between mt-8">
+                        <p>Feels Like</p>
+                        <p class="font-bold">{{current.feelsLike}}<span>°F</span></p>
+                    </div>
+                    <div v-show="current.humidity" class="flex justify-between mt-8">
+                        <p>Humidity</p>
+                        <p class="font-bold">{{current.humidity}}%</p>
+                    </div>
+                    <div v-show="current.windSpeed"class="flex justify-between mt-8">
+                        <p>Wind</p>
+                        <p class="font-bold">{{current.windSpeed}}m/h</p>
+                    </div>
+                    <div v-show="current.main" class="flex justify-between mt-8">
+                        <p>{{current.main}}</p>
+                        <p class="font-bold">{{current.desc}}</p>
+                    </div>
+                </div>
+                <div v-show="Object.keys(current).length > 0" class="favorites">
+                    <h3 class="mt-12"> Saved Locations:</h3>
+                    <div v-for="place in places" class="mt-8 city flex items-center">
+                        <p v-on:click="savedWeather(place.lon, place.lat,place.name)" v-bind:class="[{active: place.isActive}]">{{place.name}}</p>
+                        <svg v-show="!place.isActive" v-on:click="removeCity(place)" class="text-white" width="1.15em" height="1.15em" viewBox="0 0 16 16" class="bi bi-dash-circle" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
