@@ -1,3 +1,14 @@
+let dog 
+
+fetch("/.netlify/functions/hello-world")
+    .then(res => {
+        if (!res.ok) throw new Error("HTTP error");
+        return res.json();
+    })
+    .then(data => dog = data)
+
+console.log(dog)
+
 const vm = new Vue({
     el:'#weather-content',
     data: {
@@ -6,7 +17,7 @@ const vm = new Vue({
         date: new Date().toString().split(' '),
         displayWeather: false,
         index: '',
-        key: '5a9dcad84d4820c0a683719df65280c8',
+        key: '',
         forecast: [],
         location: '',
         places: []
