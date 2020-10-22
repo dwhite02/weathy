@@ -31,25 +31,27 @@
             <header>
                 <div class="topnav flex justify-between items-center bg-white">
                     <div class="logo-col w-32">
-                        <img class="logo " src="images/assets/logo.svg">
+                        <a href="index.html">
+                            <img class="logo " src="images/assets/logo.svg">
+                        </a>
                     </div>
                     <div class="search-container">
-                        <div class="flex searchBox">
+                        <form v-show="displayWeather" v-on:submit.prevent="onSubmit" class="flex searchBox">
                             <input v-model="location" class="searchInput" type="text" placeholder="Enter Zip Code or City..." name="search">
                             <button v-on:click="getWeather()" type="submit">
                                 <img class="h-6"src="images/assets/search.svg">
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </header>
             <section v-if="!displayWeather" id="search-section" class="flex-auto w-screen h-screen lg:w-9/12 flex justify-center items-center">
                 <div class="mx-auto">
                     <h1 class="font-black text-center"> Search for Weather</h1>
-                    <div class="flex justify-center">
+                    <form v-on:submit.prevent="onSubmit" class="flex justify-center">
                         <input v-model="location" type="text" placeholder="Enter City or Zip Code for Weather..." name="search">
                         <button v-on:click="getWeather()" type="submit" class="font-bold">Submit</button>
-                    </div>
+                    </form v-on:submit.prevent="onSubmit">
                 </div>
             </section>
             <section v-if="displayWeather" id="current-section" class="flex-auto w-screen h-screen lg:w-9/12">

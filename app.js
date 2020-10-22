@@ -1,13 +1,9 @@
-let dog 
-
-fetch("/.netlify/functions/hello-world")
+fetch("/.netlify/functions/getSingleDayWeather?q=chicago")
     .then(res => {
         if (!res.ok) throw new Error("HTTP error");
         return res.json();
     })
-    .then(data => dog = data)
-
-console.log(dog)
+    .then(data => console.log(data));
 
 const vm = new Vue({
     el:'#weather-content',
@@ -17,7 +13,6 @@ const vm = new Vue({
         date: new Date().toString().split(' '),
         displayWeather: false,
         index: '',
-        key: '',
         forecast: [],
         location: '',
         places: []
@@ -49,14 +44,12 @@ const vm = new Vue({
             let url
 
             if (Number(this.location)) {
-               url =  'https://api.openweathermap.org/data/2.5/weather?' + new URLSearchParams({
-                    "appid": this.key,
+                url =  '/.netlify/functions/getSingleDayWeather?' + new URLSearchParams({
                     "zip": this.location + ',us',
                     "units": 'imperial',
                 })
             } else {
-                url = 'https://api.openweathermap.org/data/2.5/weather?' + new URLSearchParams({
-                    "appid": this.key,
+                url = '/.netlify/functions/getSingleDayWeather?' + new URLSearchParams({
                     "q": this.location,
                     "units": 'imperial',
                 })
@@ -79,8 +72,7 @@ const vm = new Vue({
                 })
                 .then(current => {
                     this.isAdded(current.name)
-                    fetch('https://api.openweathermap.org/data/2.5/onecall?' + new URLSearchParams({
-                        "appid": this.key,
+                    fetch('/.netlify/functions/getForecastWeather?' + new URLSearchParams({
                         "lat": current.lat,
                         "lon": current.lon,
                         "units": 'imperial',
@@ -92,8 +84,7 @@ const vm = new Vue({
             this.displayWeather = true  
         },
         savedWeather: function(lon, lat, name) {
-            fetch('https://api.openweathermap.org/data/2.5/onecall?' + new URLSearchParams({
-                "appid": this.key,
+            fetch('/.netlify/functions/getForecastWeather?' + new URLSearchParams({
                 "lat": lat,
                 "lon": lon,
                 "units": 'imperial',

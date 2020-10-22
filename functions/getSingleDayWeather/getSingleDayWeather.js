@@ -4,15 +4,12 @@ const qs = require('qs')
 exports.handler = async function(event) {
   // apply our function to the queryStringParameters and assign it to a variable
   const API_PARAMS = qs.stringify(event.queryStringParameters)
-  console.log('API_PARAMS', API_PARAMS)
   // Get env var values defined in our Netlify site UI
-
+  const token = process.env.API_KEY
   // TODO: customize your URL and API keys set in the Netlify Dashboard
   // this is secret too, your frontend won't see this
-  const { API_SECRET = 'shiba' } = process.env
-  const URL = `https://dog.ceo/api/breed/${API_SECRET}/images`
-
-  console.log('Constructed URL is ...', URL)
+  
+  const URL = `https://api.openweathermap.org/data/2.5/weather?appid=${token}&${API_PARAMS}`
 
   try {
     const { data } = await axios.get(URL)
@@ -21,7 +18,7 @@ exports.handler = async function(event) {
     //    axios.post('/user', { firstName: 'Fred' })
     return {
       statusCode: 200,
-      body: JSON.stringify(API_SECRET),
+      body: JSON.stringify(data),
     }
   } catch (error) {
     const { status, statusText, headers, data } = error.response

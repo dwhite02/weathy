@@ -1,3 +1,6 @@
+# 
+functions/getSingleDayWeather/node_modules
+functions/getForecastWeather/node_modules
 
 # Local Netlify folder
 .netlify
