@@ -1,10 +1,3 @@
-fetch("/.netlify/functions/getSingleDayWeather?q=chicago")
-    .then(res => {
-        if (!res.ok) throw new Error("HTTP error");
-        return res.json();
-    })
-    .then(data => console.log(data));
-
 const vm = new Vue({
     el:'#weather-content',
     data: {
